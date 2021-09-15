@@ -12,7 +12,7 @@ const books = [
  
 //READ Request Handlers
 app.get('/', (req, res) => {
-res.send('Welcome to my Event Management System');
+res.send('This will be the API for the Event Management Database');
 });
  
 app.get('/api/books', (req,res)=> {
