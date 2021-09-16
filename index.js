@@ -4,12 +4,32 @@ const express = require('express');
 const app = express();
 app.use(express.json());
  
+//===========================================================================//
+
+const events = [
+    {title: 'Art Show', id: 1},
+    {title: 'Electric Car Show', id: 2},
+    {title: 'Spacex Visit', id: 3}
+    ]
+    
+    app.get('/api/events', (req,res)=> {
+        res.send(events);
+    }); 
+
+    app.get('/api/events/:id', (req, res) => {
+        const event = events.find(c => c.id === parseInt(req.params.id));
+         
+        if (!event) res.status(404).send('<h2 style="font-family: Malgun Gothic; color: darkred;">Ooops... Cant find what you are looking for!</h2>');
+        res.send(event);
+    });
+
+//---------------------------------------------------------------------------//
 const books = [
 {title: 'Harry Potter', id: 1},
 {title: 'Twilight', id: 2},
 {title: 'Lorien Legacies', id: 3}
 ]
- 
+
 //READ Request Handlers
 app.get('/', (req, res) => {
 res.send('This will be the API for the Event Management Database');
