@@ -25,7 +25,7 @@ app.get('/api/dbevents2', function (req, res, next) {
             console.log(err);
             res.status(400).send(err);
         }
-        res.status(200).send(result.rows);
+        res.send(result.rows);
     });
 });
 
