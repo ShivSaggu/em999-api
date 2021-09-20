@@ -24,7 +24,7 @@ client.connect();
 
 
 app.get('/api/dbevents', (req,res)=> {
-    res.send( 'hello2');
+    res.send( 'hello3');
 }); 
 
 app.get('/api/dbevents2', function (req, res, next) {
