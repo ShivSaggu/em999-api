@@ -2,8 +2,6 @@
 const express = require('express');
  
 
-const app = express();
-app.use(express.json());
  
 //============================ accessing postgresql ==========================//
 
@@ -24,7 +22,7 @@ client.connect();
 
 
 app.get('/api/dbevents', (req,res)=> {
-    res.send( 'hello3');
+    res.send( 'hello4');
 }); 
 
 app.get('/api/dbevents2', function (req, res, next) {
@@ -38,6 +36,11 @@ app.get('/api/dbevents2', function (req, res, next) {
 });
 
 //===========================================================================//
+
+
+const app = express();
+app.use(express.json());
+
 
 const events = [
     {title: 'Art Show', id: 1},
