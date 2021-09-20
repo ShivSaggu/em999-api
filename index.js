@@ -56,14 +56,14 @@ async function poolDemo() {
     console.log("Time with client: " + clientResult.rows[0]["now"]);
 
     const clientResult2 = await clientDemo2();
-    console.log("Time with client: " + clientResult2);
+    console.log("DBEVENTS: " + clientResult2.rows[0]);
 
   })();
 
 
 
 app.get('/api/dbevents', (req,res)=> {
-    res.send(  'HELLO' );
+    res.send( clientResult2.rows[0] );
 }); 
 
 
