@@ -37,6 +37,15 @@ async function poolDemo() {
     return now;
   }
   
+  async function clientDemo2() {
+    const client = new Client(credentials);
+    await client.connect();
+    const now = await client.query("select first_name__c from salesforce.event_attendee__c");
+    await client.end();
+  
+    return now;
+  }
+
   // Use a self-calling function so we can use async / await.
   
   (async () => {
@@ -45,12 +54,16 @@ async function poolDemo() {
   
     const clientResult = await clientDemo();
     console.log("Time with client: " + clientResult.rows[0]["now"]);
+
+    const clientResult2 = await clientDemo2();
+    console.log("Time with client: " + clientResult2);
+
   })();
 
 
 
 app.get('/api/dbevents', (req,res)=> {
-    res.send( clientResult.rows[0]["now"] );
+    res.send(  clientResult2 );
 }); 
 
 
