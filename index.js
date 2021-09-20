@@ -4,6 +4,14 @@ const express = require('express');
 const app = express();
 app.use(express.json());
  
+//============================ accessing postgresql ==========================//
+
+app.get('/api/dbevents', (req,res)=> {
+    res.send(events);
+}); 
+
+
+
 //===========================================================================//
 
 const events = [
