@@ -5,6 +5,16 @@ const app = express();
 app.use(express.json());
  
 //============================ accessing postgresql ==========================//
+const { Pool, Client } = require("pg");
+
+const credentials = {
+  user: "ec2-44-198-100-81.compute-1.amazonaws.com",
+  host: "localhost",
+  database: "d1etncsvhcajva",
+  password: "cca1a242943dd78a4c30844b567fcd0ccab3330531fd17b61fa4375ed7365744",
+  port: 5432,
+};
+
 
 app.get('/api/dbevents', (req,res)=> {
     res.send(events);
