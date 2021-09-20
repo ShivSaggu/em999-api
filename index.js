@@ -7,11 +7,19 @@ app.use(express.json());
  
 //============================ accessing postgresql ==========================//
 
-const { Client } = require('pg');
-var connectionString = "postgres://wxytofkgzvnhat:cca1a242943dd78a4c30844b567fcd0ccab3330531fd17b61fa4375ed7365744@ec2-44-198-100-81.compute-1.amazonaws.com:5432/d1etncsvhcajva";
+const { Client } = require('pg')
 const client = new Client({
-    connectionString: connectionString
+  user: 'wxytofkgzvnhat',
+  host: 'ec2-44-198-100-81.compute-1.amazonaws.com',
+  database: 'd1etncsvhcajva',
+  password: 'cca1a242943dd78a4c30844b567fcd0ccab3330531fd17b61fa4375ed7365744',
+  port: 5432,
+})
+client.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
 });
+
 client.connect();
 
 
@@ -25,7 +33,7 @@ app.get('/api/dbevents2', function (req, res, next) {
             console.log(err);
             res.status(400).send(err);
         }
-        res.send(result.rows);
+        res.status(200).send(result.rows);
     });
 });
 
