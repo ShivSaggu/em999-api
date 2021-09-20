@@ -16,10 +16,10 @@ client.connect();
 
 
 app.get('/api/dbevents', (req,res)=> {
-    res.send( 'hello');
+    res.send( 'hello2');
 }); 
 
-app.get('/API/dbevents2', function (req, res, next) {
+app.get('/api/dbevents2', function (req, res, next) {
     client.query('select first_name__c from salesforce.event_attendee__c', [1], function (err, result) {
         if (err) {
             console.log(err);
