@@ -63,7 +63,7 @@ async function poolDemo() {
 
 
 app.get('/api/dbevents', (req,res)=> {
-    res.send(  clientResult2 );
+    res.send(  'HELLO' );
 }); 
 
 
