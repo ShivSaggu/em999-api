@@ -6,20 +6,15 @@ app.use(express.json());
  
 //============================ accessing postgresql ==========================//
 
-const { Client } = require('pg')
-const client = new Client({
-  user: 'wxytofkgzvnhat',
-  host: 'ec2-44-198-100-81.compute-1.amazonaws.com',
-  database: 'd1etncsvhcajva',
-  password: 'cca1a242943dd78a4c30844b567fcd0ccab3330531fd17b61fa4375ed7365744',
-  port: 5432,
-})
-client.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-});
+const pg = require('pg');
+
+const cs = 'postgres://postgres:s$cret@localhost:5432/ydb';
+
+const client = new pg.Client(cs);
 
 client.connect();
+
+
 
 
 app.get('/api/dbevents', (req,res)=> {
@@ -36,9 +31,21 @@ app.get('/api/dbevents2', function (req, res, next) {
     });
 });
 
-app.get('/api/dbevents3', async (req, res) => {
-    const result = await client.query('select first_name__c from salesforce.event_attendee__c');
-    res.send(result.rows[0]);
+app.get('/api/dbevents3', async (req, res) => { 
+    client.query('SELECT * FROM cars').then(res => {
+
+        const fields = res.fields.map(field => field.name);
+    
+        console.log(fields);
+
+        res.status(200).send(fields);
+    
+    }).catch(err => {
+        console.log(err.stack);
+    }).finally(() => {
+        client.end()
+    });
+
    })
 
 //===========================================================================//
