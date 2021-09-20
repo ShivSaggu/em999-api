@@ -1,72 +1,33 @@
 
 const express = require('express');
-const { Pool, Client } = require("pg");
+ 
 
 const app = express();
 app.use(express.json());
  
 //============================ accessing postgresql ==========================//
 
-
-const credentials = {
-  user: "ec2-44-198-100-81.compute-1.amazonaws.com",
-  host: "localhost",
-  database: "d1etncsvhcajva",
-  password: "cca1a242943dd78a4c30844b567fcd0ccab3330531fd17b61fa4375ed7365744",
-  port: 5432,
-};
-
-// Connect with a connection pool.
-
-async function poolDemo() {
-    const pool = new Pool(credentials);
-    const now = await pool.query("SELECT NOW()");
-    await pool.end();
-  
-    return now;
-  }
-  
-  // Connect with a client.
-  
-  async function clientDemo() {
-    const client = new Client(credentials);
-    await client.connect();
-    const now = await client.query("SELECT NOW()");
-    await client.end();
-  
-    return now;
-  }
-  
-  async function clientDemo2() {
-    const client = new Client(credentials);
-    await client.connect();
-    const now = await client.query("select first_name__c from salesforce.event_attendee__c");
-    await client.end();
-  
-    return now;
-  }
-
-  // Use a self-calling function so we can use async / await.
-  
-  (async () => {
-    const poolResult = await poolDemo();
-    console.log("Time with pool: " + poolResult.rows[0]["now"]);
-  
-    const clientResult = await clientDemo();
-    console.log("Time with client: " + clientResult.rows[0]["now"]);
-
-    const clientResult2 = await clientDemo2();
-    console.log("DBEVENTS: " + clientResult2.rows[0]);
-
-  })();
-
+const { Client } = require('pg');
+var connectionString = "postgres://wxytofkgzvnhat:cca1a242943dd78a4c30844b567fcd0ccab3330531fd17b61fa4375ed7365744@ec2-44-198-100-81.compute-1.amazonaws.com:5432/d1etncsvhcajva";
+const client = new Client({
+    connectionString: connectionString
+});
+client.connect();
 
 
 app.get('/api/dbevents', (req,res)=> {
-    res.send( clientResult2.rows[0] );
+    res.send( 'hello');
 }); 
 
-
+app.get('/API/dbevents2', function (req, res, next) {
+    client.query('select first_name__c from salesforce.event_attendee__c', [1], function (err, result) {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err);
+        }
+        res.status(200).send(result.rows);
+    });
+});
 
 //===========================================================================//
 
