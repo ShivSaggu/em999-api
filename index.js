@@ -50,7 +50,7 @@ async function poolDemo() {
 
 
 app.get('/api/dbevents', (req,res)=> {
-    res.send("Time with pool: " + poolResult.rows[0]["now"]);
+    res.send( clientResult.rows[0]["now"] );
 }); 
 
 
