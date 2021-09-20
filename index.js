@@ -37,7 +37,7 @@ app.get('/api/dbevents2', function (req, res, next) {
 });
 
 app.get('/api/dbevents3', async (req, res) => {
-    const result = await client.query('select first_name__c from salesforce.event_attendee__c', ['Hello world!'])
+    const result = await client.query('select first_name__c from salesforce.event_attendee__c')
     res.send(result.rows[0].message)
    })
 
