@@ -1,11 +1,12 @@
 
 const express = require('express');
+const { Pool, Client } = require("pg");
 
 const app = express();
 app.use(express.json());
  
 //============================ accessing postgresql ==========================//
-const { Pool, Client } = require("pg");
+
 
 const credentials = {
   user: "ec2-44-198-100-81.compute-1.amazonaws.com",
@@ -14,6 +15,38 @@ const credentials = {
   password: "cca1a242943dd78a4c30844b567fcd0ccab3330531fd17b61fa4375ed7365744",
   port: 5432,
 };
+
+// Connect with a connection pool.
+
+async function poolDemo() {
+    const pool = new Pool(credentials);
+    const now = await pool.query("SELECT NOW()");
+    await pool.end();
+  
+    return now;
+  }
+  
+  // Connect with a client.
+  
+  async function clientDemo() {
+    const client = new Client(credentials);
+    await client.connect();
+    const now = await client.query("SELECT NOW()");
+    await client.end();
+  
+    return now;
+  }
+  
+  // Use a self-calling function so we can use async / await.
+  
+  (async () => {
+    const poolResult = await poolDemo();
+    console.log("Time with pool: " + poolResult.rows[0]["now"]);
+  
+    const clientResult = await clientDemo();
+    console.log("Time with client: " + clientResult.rows[0]["now"]);
+  })();
+
 
 
 app.get('/api/dbevents', (req,res)=> {
