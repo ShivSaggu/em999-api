@@ -50,7 +50,7 @@ async function poolDemo() {
 
 
 app.get('/api/dbevents', (req,res)=> {
-    res.send(events);
+    res.send(poolResult);
 }); 
 
 
