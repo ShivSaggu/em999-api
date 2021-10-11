@@ -57,7 +57,7 @@ app.get('/api/dbevents3', async (req, res) => {
 const events = [
     {title: 'Flower Show', id: 1},
     {title: 'Art Show', id: 2},
-    {title: 'Horse Racing Event', id: 3}
+    {title: 'Horse Racing Event', id: 3},
     {title: 'Car Show and Tell', id: 4}
     ]
     
